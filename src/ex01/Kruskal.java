@@ -1,5 +1,6 @@
 package ex01;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -33,15 +34,7 @@ public class Kruskal {
         //记录形成的最小生成树的权值
         int result=0;
         //将树的边按照权值大小进行升序排序；
-        for(int i=0;i<tree.edgeNum;++i){
-            for(int j=i+1;j<tree.edgeNum;++j){
-                if(tree.edge[j].w<tree.edge[i].w){
-                    Edge temp=tree.edge[i];
-                    tree.edge[i]=tree.edge[j];
-                    tree.edge[j]=temp;
-                }
-            }
-        }
+        Arrays.sort(tree.edge);
         //n个顶点仅需n-1条边构成最小生成树
         int count=tree.nodeNum-1;
         for(int j=0;j<tree.edgeNum;++j){
@@ -73,11 +66,16 @@ class TreeK {
     Edge edge[];
 }
 
-class Edge{
+class Edge implements Comparable<Edge>{
     int u,v,w;
     public Edge(int u,int v,int w){
         this.u=u;
         this.v=v;
         this.w=w;
+    }
+
+    @Override
+    public int compareTo(Edge o) {
+        return this.w-o.w;
     }
 }
